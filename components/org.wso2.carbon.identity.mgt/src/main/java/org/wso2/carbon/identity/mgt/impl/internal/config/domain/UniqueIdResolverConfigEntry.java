@@ -16,17 +16,25 @@
 
 package org.wso2.carbon.identity.mgt.impl.internal.config.domain;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Unique Id Resolver Config Entry.
  */
+@Configuration(description = "Unique Id Resolver Config Entry")
 public class UniqueIdResolverConfigEntry {
 
-    private String type;
+    private String type = "JDBCUniqueIdResolver";
 
-    private Map<String, String> properties;
+    private Map<String, String> properties = new HashMap<>();
+
+    public UniqueIdResolverConfigEntry() {
+        properties.put("dataSource", "WSO2_CARBON_DB");
+    }
 
     public String getType() {
         return type;

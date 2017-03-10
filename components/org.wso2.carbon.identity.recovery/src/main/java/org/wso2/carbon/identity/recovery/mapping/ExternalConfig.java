@@ -18,9 +18,12 @@
 
 package org.wso2.carbon.identity.recovery.mapping;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+
 /**
  * Class to represent External Password Recovery config
  */
+@Configuration(description = "External Password Recovery Configurations")
 public class ExternalConfig {
     private boolean enablePortal = false;
     private String url = "";

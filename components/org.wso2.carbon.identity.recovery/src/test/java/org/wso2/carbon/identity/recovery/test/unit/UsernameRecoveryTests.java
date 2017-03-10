@@ -21,7 +21,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.wso2.carbon.identity.mgt.claim.Claim;
 import org.wso2.carbon.identity.recovery.IdentityRecoveryException;
+import org.wso2.carbon.identity.recovery.internal.IdentityRecoveryServiceDataHolder;
 import org.wso2.carbon.identity.recovery.username.NotificationUsernameRecoveryManager;
+import org.wso2.carbon.kernel.configprovider.YAMLBasedConfigFileReader;
+import org.wso2.carbon.kernel.internal.configprovider.ConfigProviderImpl;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,10 +34,13 @@ import java.util.List;
  */
 @PrepareForTest(NotificationUsernameRecoveryManager.class)
 public class UsernameRecoveryTests {
-    private static NotificationUsernameRecoveryManager instance = NotificationUsernameRecoveryManager.getInstance();
+
 
     @Test
     public void testVerifyUsername() throws IdentityRecoveryException {
+        NotificationUsernameRecoveryManager instance = NotificationUsernameRecoveryManager.getInstance();
+        IdentityRecoveryServiceDataHolder.getInstance()
+                .setConfigProvider(new ConfigProviderImpl(new YAMLBasedConfigFileReader("sdf")));
         List<Claim> claims;
         boolean result;
 

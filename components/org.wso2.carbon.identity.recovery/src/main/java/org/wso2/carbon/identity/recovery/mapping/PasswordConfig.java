@@ -15,9 +15,12 @@
 */
 package org.wso2.carbon.identity.recovery.mapping;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+
 /**
  * Class to represent Password Recovery config
  */
+@Configuration(description = "Password Recovery configurations")
 public class PasswordConfig {
 
     private boolean enableAPI = true;

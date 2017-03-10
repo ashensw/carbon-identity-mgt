@@ -58,6 +58,8 @@ import org.wso2.carbon.identity.mgt.impl.internal.config.store.IdentityStoreConf
 import org.wso2.carbon.identity.mgt.resolver.UniqueIdResolver;
 import org.wso2.carbon.identity.mgt.resolver.UniqueIdResolverConfig;
 import org.wso2.carbon.identity.mgt.resolver.UniqueIdResolverFactory;
+import org.wso2.carbon.kernel.configprovider.ConfigProvider;
+import org.wso2.carbon.kernel.internal.DataHolder;
 import org.wso2.carbon.kernel.startupresolver.RequiredCapabilityListener;
 
 import java.util.ArrayList;
@@ -273,6 +275,32 @@ public class IdentityMgtComponent implements RequiredCapabilityListener {
 
     protected void unregisterEventService(EventService eventService) {
         IdentityMgtDataHolder.getInstance().registerEventService(null);
+    }
+
+    /**
+     * Get the ConfigProvider service.
+     * This is the bind method that gets called for ConfigProvider service registration that satisfy the policy.
+     *
+     * @param configProvider the ConfigProvider service that is registered as a service.
+     */
+    @Reference(
+            name = "carbon.config.provider",
+            service = ConfigProvider.class,
+            cardinality = ReferenceCardinality.MANDATORY,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "unregisterConfigProvider"
+    )
+    protected void registerConfigProvider(ConfigProvider configProvider) {
+        DataHolder.getInstance().setConfigProvider(configProvider);
+    }
+
+    /**
+     * This is the unbind method for the above reference that gets called for ConfigProvider instance un-registrations.
+     *
+     * @param configProvider the ConfigProvider service that get unregistered.
+     */
+    protected void unregisterConfigProvider(ConfigProvider configProvider) {
+        DataHolder.getInstance().setConfigProvider(null);
     }
 
     @Override

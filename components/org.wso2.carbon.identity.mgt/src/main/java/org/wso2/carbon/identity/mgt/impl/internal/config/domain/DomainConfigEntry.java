@@ -16,45 +16,41 @@
 
 package org.wso2.carbon.identity.mgt.impl.internal.config.domain;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+import org.wso2.carbon.kernel.annotations.Element;
+
 import java.util.Collections;
 import java.util.List;
 
 /**
  * Domain configuration entry.
  */
+@Configuration(description = "Domain Configuration Entry")
 public class DomainConfigEntry {
 
-    /**
-     * Domain Id value.
-     */
+    @Element(description = "Domain Id value")
     private int id;
 
-    /**
-     * Unique name of the domain.
-     */
+    @Element(description = "Unique name of the domain")
     private String name;
 
-    /**
-     * Order of the domain
-     */
+    @Element(description = "Order of the domain")
     private int order;
 
-    /**
-     * Domain status
-     */
+    @Element(description = "Domain status")
     private boolean active = true;
 
-    private UniqueIdResolverConfigEntry uniqueIdResolver;
+    private UniqueIdResolverConfigEntry uniqueIdResolver = new UniqueIdResolverConfigEntry();
 
-    /**
-     * IdentityStoreConnector domain configuration list.
-     */
+    @Element(description = "IdentityStoreConnector domain configuration list")
     private List<DomainStoreConnectorEntry> identityStoreConnectors;
 
-    /**
-     * IdentityStoreConnector domain configuration list.
-     */
+    @Element(description = "IdentityStoreConnector domain configuration list")
     private List<DomainStoreConnectorEntry> credentialStoreConnectors;
+
+    public DomainConfigEntry() {
+
+    }
 
     public int getId() {
         return id;

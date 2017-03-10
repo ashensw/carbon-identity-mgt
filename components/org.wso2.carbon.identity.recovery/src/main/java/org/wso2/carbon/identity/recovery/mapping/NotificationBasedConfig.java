@@ -18,9 +18,12 @@
 
 package org.wso2.carbon.identity.recovery.mapping;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+
 /**
  * Class to represent notification based password recovery config
  */
+@Configuration(description = "Notification based password recovery configurations")
 public class NotificationBasedConfig {
 
     private RecoveryLinkConfig recoveryLink = new RecoveryLinkConfig();

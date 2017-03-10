@@ -15,9 +15,12 @@
 */
 package org.wso2.carbon.identity.recovery.mapping;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+
 /**
  * Class to represent security question based password recovery config
  */
+@Configuration(description = "Security Question Based Password Recovery Configurations")
 public class SecurityQuestionsConfig {
 
     private boolean notifyStart = false;

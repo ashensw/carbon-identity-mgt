@@ -16,20 +16,35 @@
 
 package org.wso2.carbon.identity.mgt.impl.internal.config.store;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+
 /**
  * Cache Config Entry
  */
+@Configuration(description = "Cache Configuration Parameters")
 public class CacheConfigEntry {
 
-    private String name;
+    private String name = "CACHE-USERNAME";;
 
     private boolean enableCache = true;
 
-    private int expireTime;
+    private int expireTime = 300;
 
-    private int maxCapacity;
+    private int maxCapacity = 1000;
 
-    private boolean statisticsEnabled;
+    private boolean statisticsEnabled = true;
+
+    public CacheConfigEntry() {
+    }
+
+    public CacheConfigEntry(String name, boolean enableCache, int expireTime, int maxCapacity,
+                            boolean statisticsEnabled) {
+        this.name = name;
+        this.enableCache = enableCache;
+        this.expireTime = expireTime;
+        this.maxCapacity = maxCapacity;
+        this.statisticsEnabled = statisticsEnabled;
+    }
 
     public String getName() {
         return name;

@@ -16,6 +16,8 @@
 
 package org.wso2.carbon.identity.mgt.impl.internal.config.domain;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,7 @@ import java.util.Map;
 /**
  * Store connector config entry for domain config.
  */
+@Configuration(description = "Store connector config entry for domain config")
 public class DomainStoreConnectorEntry {
 
     private String connectorId;

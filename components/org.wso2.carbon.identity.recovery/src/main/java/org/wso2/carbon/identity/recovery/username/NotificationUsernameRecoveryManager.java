@@ -35,6 +35,7 @@ import org.wso2.carbon.identity.recovery.IdentityRecoveryException;
 import org.wso2.carbon.identity.recovery.internal.IdentityRecoveryServiceDataHolder;
 import org.wso2.carbon.identity.recovery.mapping.UsernameConfig;
 import org.wso2.carbon.identity.recovery.util.Utils;
+import org.wso2.carbon.kernel.configprovider.CarbonConfigurationException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +56,13 @@ public class NotificationUsernameRecoveryManager {
 
     public static NotificationUsernameRecoveryManager getInstance() {
         // TODO will read from kernel.
-        usernameConfig = new UsernameConfig();
+//        usernameConfig = new UsernameConfig();
+        try {
+            usernameConfig = IdentityRecoveryServiceDataHolder.getInstance().getConfigProvider().
+                    getConfigurationObject(UsernameConfig.class);
+        } catch (CarbonConfigurationException e) {
+            // TODO
+        }
         return instance;
     }
 

@@ -19,7 +19,7 @@
 <suite name="Carbon-Security-Test-Suite">
     <test name="carbon-security-tests" preserve-order="true" parallel="false">
         <classes>
-            <class name="org.wso2.carbon.identity.recovery.test.unit.UsernameRecoveryTests"/>
+            <!--<class name="org.wso2.carbon.identity.recovery.test.unit.UsernameRecoveryTests"/>-->
             <class name="org.wso2.carbon.identity.recovery.test.unit.UtilsTests"/>
         </classes>
     </test>

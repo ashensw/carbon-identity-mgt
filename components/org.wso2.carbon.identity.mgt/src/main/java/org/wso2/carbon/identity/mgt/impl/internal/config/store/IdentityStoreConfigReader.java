@@ -19,12 +19,14 @@ package org.wso2.carbon.identity.mgt.impl.internal.config.store;
 import org.wso2.carbon.identity.mgt.exception.CarbonIdentityMgtConfigException;
 import org.wso2.carbon.identity.mgt.impl.config.CacheConfig;
 import org.wso2.carbon.identity.mgt.impl.config.StoreConfig;
-import org.wso2.carbon.identity.mgt.impl.util.FileUtil;
-import org.wso2.carbon.identity.mgt.impl.util.IdentityMgtConstants;
+//import org.wso2.carbon.identity.mgt.impl.util.FileUtil;
+//import org.wso2.carbon.identity.mgt.impl.util.IdentityMgtConstants;
+import org.wso2.carbon.kernel.configprovider.CarbonConfigurationException;
+import org.wso2.carbon.kernel.internal.DataHolder;
 import org.wso2.carbon.kernel.utils.StringUtils;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+//import java.nio.file.Path;
+//import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +52,14 @@ public class IdentityStoreConfigReader {
      */
     public static StoreConfig getStoreConfig() throws CarbonIdentityMgtConfigException {
 
-        StoreConfigFile storeConfigFile = buildStoreConfig();
+//        StoreConfigFile storeConfigFile = buildStoreConfig();
+        StoreConfigFile storeConfigFile = null;
+        try {
+            storeConfigFile = DataHolder.getInstance().getConfigProvider().
+                    getConfigurationObject(StoreConfigFile.class);
+        } catch (CarbonConfigurationException e) {
+            throw new CarbonIdentityMgtConfigException("Fail to load store configurations");
+        }
         StoreConfig storeConfig = new StoreConfig();
 
         if (!storeConfigFile.isEnableCache()) {
@@ -88,14 +97,14 @@ public class IdentityStoreConfigReader {
      * @return StoreConfig file from store-config.yaml
      * @throws CarbonIdentityMgtConfigException on error in reading file.
      */
-    private static StoreConfigFile buildStoreConfig() throws CarbonIdentityMgtConfigException {
-
-        Path file = Paths.get(IdentityMgtConstants.getCarbonHomeDirectory().toString(), "conf", "identity",
-                IdentityMgtConstants.STORE_CONFIG_FILE);
-
-        // store-config.yaml is a mandatory configuration file.
-        return FileUtil.readConfigFile(file, StoreConfigFile.class);
-    }
+//    private static StoreConfigFile buildStoreConfig() throws CarbonIdentityMgtConfigException {
+//
+//        Path file = Paths.get(IdentityMgtConstants.getCarbonHomeDirectory().toString(), "conf", "identity",
+//                IdentityMgtConstants.STORE_CONFIG_FILE);
+//
+//        // store-config.yaml is a mandatory configuration file.
+//        return FileUtil.readConfigFile(file, StoreConfigFile.class);
+//    }
 
     /**
      * Get cache configs for each connector.

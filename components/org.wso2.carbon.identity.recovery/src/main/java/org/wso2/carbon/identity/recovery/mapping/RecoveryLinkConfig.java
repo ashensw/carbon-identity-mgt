@@ -18,9 +18,12 @@
 
 package org.wso2.carbon.identity.recovery.mapping;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+
 /**
  *
  */
+@Configuration(description = "Recovery Link Configurations")
 public class RecoveryLinkConfig {
     private boolean enableAPI = false;
     private boolean enablePortal = true;

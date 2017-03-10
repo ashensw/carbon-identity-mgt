@@ -18,9 +18,12 @@
 
 package org.wso2.carbon.identity.recovery.mapping;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+
 /**
  * Class to represent recovery config
  */
+@Configuration(description = "Recovery configurations")
 public class RecoveryConfig {
 
     private PasswordConfig password = new PasswordConfig();

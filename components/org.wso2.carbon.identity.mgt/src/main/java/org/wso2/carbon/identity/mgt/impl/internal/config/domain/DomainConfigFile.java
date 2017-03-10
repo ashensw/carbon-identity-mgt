@@ -16,19 +16,27 @@
 
 package org.wso2.carbon.identity.mgt.impl.internal.config.domain;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+import org.wso2.carbon.kernel.annotations.Element;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
  * Domain config.
  */
+@Configuration(namespace = "wso2.domain.config", description = "Domain Configuration Parameters")
 public class DomainConfigFile {
 
-    /**
-     * List of domain configuration entries.
-     */
+    @Element(description = "List of domain configuration entries")
     private List<DomainConfigEntry> domains;
 
+    public DomainConfigFile() {
+        DomainConfigEntry domainConfigEntry = new DomainConfigEntry();
+        domains = new ArrayList<>();
+        domains.add(domainConfigEntry);
+    }
     /**
      * Get Domain configuration entries.
      *

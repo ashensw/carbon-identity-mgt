@@ -37,6 +37,7 @@ import org.wso2.carbon.identity.recovery.password.NotificationPasswordRecoveryMa
 import org.wso2.carbon.identity.recovery.password.SecurityQuestionPasswordRecoveryManager;
 import org.wso2.carbon.identity.recovery.store.JDBCRecoveryDataStore;
 import org.wso2.carbon.identity.recovery.username.NotificationUsernameRecoveryManager;
+import org.wso2.carbon.kernel.configprovider.ConfigProvider;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -81,7 +82,10 @@ public class IdentityRecoveryServiceComponent {
                             ChallengeQuestionManager.getInstance()), null);
             bundleContext.registerService(ChallengeQuestionManager.class.getName(),
                     ChallengeQuestionManager.getInstance(), null);
-            IdentityRecoveryServiceDataHolder.getInstance().setRecoveryLinkConfig(new RecoveryLinkConfig());
+
+            RecoveryLinkConfig recoveryLinkConfig = IdentityRecoveryServiceDataHolder.getInstance().getConfigProvider().
+                    getConfigurationObject(RecoveryLinkConfig.class);
+            IdentityRecoveryServiceDataHolder.getInstance().setRecoveryLinkConfig(recoveryLinkConfig);
 
         } catch (Exception e) {
             log.error("Error while activating identity governance component.", e);
@@ -167,5 +171,31 @@ public class IdentityRecoveryServiceComponent {
 
     private void initializeDao(JdbcTemplate jdbcTemplate) {
         JDBCRecoveryDataStore.getInstance().setJdbcTemplate(jdbcTemplate);
+    }
+
+    /**
+     * Get the ConfigProvider service.
+     * This is the bind method that gets called for ConfigProvider service registration that satisfy the policy.
+     *
+     * @param configProvider the ConfigProvider service that is registered as a service.
+     */
+    @Reference(
+            name = "carbon.config.provider",
+            service = ConfigProvider.class,
+            cardinality = ReferenceCardinality.MANDATORY,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "unregisterConfigProvider"
+    )
+    protected void registerConfigProvider(ConfigProvider configProvider) {
+        IdentityRecoveryServiceDataHolder.getInstance().setConfigProvider(configProvider);
+    }
+
+    /**
+     * This is the unbind method for the above reference that gets called for ConfigProvider instance un-registrations.
+     *
+     * @param configProvider the ConfigProvider service that get unregistered.
+     */
+    protected void unregisterConfigProvider(ConfigProvider configProvider) {
+        IdentityRecoveryServiceDataHolder.getInstance().setConfigProvider(null);
     }
 }

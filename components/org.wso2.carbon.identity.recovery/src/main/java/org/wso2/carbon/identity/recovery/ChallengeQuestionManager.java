@@ -25,10 +25,12 @@ import org.slf4j.LoggerFactory;
 import org.wso2.carbon.identity.mgt.User;
 import org.wso2.carbon.identity.mgt.exception.IdentityStoreException;
 import org.wso2.carbon.identity.mgt.exception.UserNotFoundException;
+import org.wso2.carbon.identity.recovery.internal.IdentityRecoveryServiceDataHolder;
 import org.wso2.carbon.identity.recovery.mapping.SecurityQuestionsConfig;
 import org.wso2.carbon.identity.recovery.model.ChallengeQuestion;
 import org.wso2.carbon.identity.recovery.model.UserChallengeAnswer;
 import org.wso2.carbon.identity.recovery.util.Utils;
+import org.wso2.carbon.kernel.configprovider.CarbonConfigurationException;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -53,8 +55,13 @@ public class ChallengeQuestionManager {
     private ChallengeQuestionManager() {
     }
 
-    public static ChallengeQuestionManager getInstance() {
-        recoveryConfig = new SecurityQuestionsConfig();
+    public static ChallengeQuestionManager getInstance() throws IdentityRecoveryException {
+        try {
+            recoveryConfig = IdentityRecoveryServiceDataHolder.getInstance().getConfigProvider().
+                    getConfigurationObject(SecurityQuestionsConfig.class);
+        } catch (CarbonConfigurationException e) {
+            throw new IdentityRecoveryException("edsf");
+        }
         separator = recoveryConfig.getQuestionSeparator();
         return instance;
     }

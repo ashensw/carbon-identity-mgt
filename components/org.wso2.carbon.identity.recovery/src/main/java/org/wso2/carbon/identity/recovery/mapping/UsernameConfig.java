@@ -19,9 +19,12 @@
 package org.wso2.carbon.identity.recovery.mapping;
 
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+
 /**
  * Class to represent username recovery config
  */
+@Configuration(description = "Username recovery configurations")
 public class UsernameConfig {
     private boolean enableAPI = false;
     private boolean enablePortal = true;

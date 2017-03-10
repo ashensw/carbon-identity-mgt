@@ -16,12 +16,15 @@
 
 package org.wso2.carbon.identity.mgt.impl.internal.config.domain;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+
 import java.util.Collections;
 import java.util.Map;
 
 /**
  * Domain attribute mapping config entry.
  */
+@Configuration(description = "Domain attribute mapping config entry")
 public class DomainAttributeConfigEntry {
 
     private String claimUri;

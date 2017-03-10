@@ -16,12 +16,15 @@
 
 package org.wso2.carbon.identity.mgt.impl.internal.config.store;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+
 import java.util.Collections;
 import java.util.List;
 
 /**
  * Store Config Entry.
  */
+@Configuration(description = "Store Configuration Parameters")
 public class StoreConfigEntry {
 
     private boolean enableCache = true;

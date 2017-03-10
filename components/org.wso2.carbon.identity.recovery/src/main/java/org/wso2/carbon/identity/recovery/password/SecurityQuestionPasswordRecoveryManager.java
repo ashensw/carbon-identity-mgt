@@ -41,6 +41,7 @@ import org.wso2.carbon.identity.recovery.model.UserChallengeAnswer;
 import org.wso2.carbon.identity.recovery.model.UserRecoveryData;
 import org.wso2.carbon.identity.recovery.store.UserRecoveryDataStore;
 import org.wso2.carbon.identity.recovery.util.Utils;
+import org.wso2.carbon.kernel.configprovider.CarbonConfigurationException;
 import org.wso2.carbon.kernel.utils.LambdaExceptionUtils;
 
 import java.util.ArrayList;
@@ -61,12 +62,19 @@ public class SecurityQuestionPasswordRecoveryManager {
 
     private static final Logger log = LoggerFactory.getLogger(SecurityQuestionPasswordRecoveryManager.class);
 
-    private static SecurityQuestionsConfig securityQuestionsConfig = new SecurityQuestionsConfig();
+    private SecurityQuestionsConfig securityQuestionsConfig;
+
     ChallengeQuestionManager challengeQuestionManager;
     UserRecoveryDataStore userRecoveryDataStore;
 
     public SecurityQuestionPasswordRecoveryManager(UserRecoveryDataStore userRecoveryDataStore,
                                                    ChallengeQuestionManager challengeQuestionManager) {
+        try {
+            this.securityQuestionsConfig = IdentityRecoveryServiceDataHolder.getInstance().getConfigProvider().
+                    getConfigurationObject(SecurityQuestionsConfig.class);
+        } catch (CarbonConfigurationException e) {
+            // TODO
+        }
         this.userRecoveryDataStore = userRecoveryDataStore;
         this.challengeQuestionManager = challengeQuestionManager;
     }

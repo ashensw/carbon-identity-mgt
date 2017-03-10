@@ -16,18 +16,36 @@
 
 package org.wso2.carbon.identity.mgt.impl.internal.config.store;
 
+import org.wso2.carbon.kernel.annotations.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * StoreConfigs Bean.
  *
  * @since 1.0.0
  */
+@Configuration(namespace = "wso2.store.config", description = "Store Configuration Parameters")
 public class StoreConfigFile {
 
     private boolean enableCache = true;
 
-    private StoreConfigEntry identityStore;
+    private StoreConfigEntry identityStore = new StoreConfigEntry();
 
-    private StoreConfigEntry credentialStore;
+    private StoreConfigEntry credentialStore = new StoreConfigEntry();
+
+    public StoreConfigFile() {
+        // Identity store default configurations.
+        identityStore.setEnableCache(true);
+        CacheConfigEntry identityStoreCacheConfigEntry = new CacheConfigEntry("CACHE-USERNAME", true, 300, 1000, true);
+        List<CacheConfigEntry> identityStoreCacheConfigs = new ArrayList<>();
+        identityStoreCacheConfigs.add(identityStoreCacheConfigEntry);
+        identityStore.setCacheConfigs(identityStoreCacheConfigs);
+
+        // Credential store default configurations.
+        credentialStore.setEnableCache(false);
+    }
 
     public boolean isEnableCache() {
         return enableCache;
